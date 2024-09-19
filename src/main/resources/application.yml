@@ -1,0 +1,10 @@
+server:
+  port: ${PORT}
+
+spring:
+  application:
+    name: "msh"
+
+email:
+  username: ${MAIL_USERNAME}
+  password: ${MAIL_KEY}
