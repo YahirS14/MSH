@@ -10,8 +10,12 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.lang.reflect.Field;
+import java.util.Locale;
+
 @Service
-public class EmailService implements EmailReposiroty {
+public class
+EmailService implements EmailReposiroty {
 
     private final JavaMailSender javaMailSender;
     private final TemplateEngine templateEngine;
@@ -24,19 +28,30 @@ public class EmailService implements EmailReposiroty {
     @Override
     public void sendEmail(EmailDto emailDto) throws MessagingException {
         try {
+
+            System.out.println("emailDto = " + emailDto.getClass().getName());
+
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setTo(emailDto.getRecipient());
             helper.setSubject(emailDto.getSubject());
 
-            Context context = new Context();
-            context.setVariable("message", emailDto.getMessage());
-            String content = templateEngine.process("email-template", context);
+            Locale locale = Locale.forLanguageTag(emailDto.getLang());
+            Context context = new Context(locale);
+            context.setVariable("data", emailDto.toString());
+
+            for (Field field : emailDto.getClass().getDeclaredFields()) {
+                field.setAccessible(true);
+                context.setVariable(field.getName(), field.get(emailDto));
+            }
+
+            String content = templateEngine.process(emailDto.getTemplate(), context);
 
             helper.setText(content, true);
             javaMailSender.send(message);
         } catch (Exception e) {
-            throw  new RuntimeException("Error sending email");
+            e.printStackTrace();
+            throw new RuntimeException("Error sending email");
         }
     }
 }

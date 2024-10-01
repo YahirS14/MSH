@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symon</title>
+
+    <style>
+        .container {
+            background-color: #d3d8e4;
+            border-radius: 5px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div style="padding: 20px">
+        <h1 style="color: #202431; text-align: left; font-size: 25px" th:text="#{email.verification.message}"></h1>
+        <div class="input-container">
+            <input type="text" th:value="${code}" maxlength="6" readonly>
+        </div>
+        <p style="margin: 15px 0; color: #202431; text-align: left" th:text="#{email.verification.expired}"></p>
+    </div>
+    <footer style="background-color: #d3d8e4">
+        <p style="text-align: center; font-size: 6px" th:text="#{email.verification.warning}"></p>
+    </footer>
+</div>
+</body>
+</html>
