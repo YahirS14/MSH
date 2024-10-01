@@ -29,8 +29,6 @@ EmailService implements EmailReposiroty {
     public void sendEmail(EmailDto emailDto) throws MessagingException {
         try {
 
-            System.out.println("emailDto = " + emailDto.getClass().getName());
-
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setTo(emailDto.getRecipient());

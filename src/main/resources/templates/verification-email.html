@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,23 +13,91 @@
             margin: 0 auto;
         }
 
-        h1 {
+        .main-content {
+            padding: 20px;
+        }
 
+        .input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #2e2f3d;
+            border-radius: 8px;
+            margin: 0 auto;
+            width: fit-content;
+        }
+
+        .input-container input {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            color: #d3d8e4;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            background-color: #2e2f3d;
+            outline: none;
+            width: 150px;
+            letter-spacing: 4px;
+        }
+
+        .warning-container {
+            background-color: #2e2f3d;
+            border-radius: 5px;
+        }
+
+        .warning-container p {
+            font-size: 15px;
+            color: #d3d8e4;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2e2f3d;
+            text-align: left;
+            font-size: 30px;
+        }
+
+        p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #2e2f3d;
+            text-align: left;
+        }
+
+        /* Media Queries Mobile */
+
+        @media(max-width: 750px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 10px;
+            }
+
+            .warning-container p {
+                font-size: 6px ;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div style="padding: 20px">
-        <h1 style="color: #202431; text-align: left; font-size: 25px" th:text="#{email.verification.message}"></h1>
-        <div class="input-container">
-            <input type="text" th:value="${code}" maxlength="6" readonly>
+    <div class="container">
+        <div class="main-content">
+            <h1 th:text="#{email.verification.message}"></h1>
+
+            <div class="input-container">
+                <input type="text" th:value="${code}" maxlength="6" readonly>
+            </div>
+
+            <p th:text="#{email.verification.expired}"></p>
         </div>
-        <p style="margin: 15px 0; color: #202431; text-align: left" th:text="#{email.verification.expired}"></p>
+
+        <div class="warning-container">
+            <p th:text="#{email.verification.warning}"></p>
+        </div>
     </div>
-    <footer style="background-color: #d3d8e4">
-        <p style="text-align: center; font-size: 6px" th:text="#{email.verification.warning}"></p>
-    </footer>
-</div>
 </body>
 </html>
